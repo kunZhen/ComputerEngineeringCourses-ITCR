@@ -1,0 +1,21 @@
+transcript on
+if {[file exists rtl_work]} {
+	vdel -lib rtl_work -all
+}
+vlib rtl_work
+vmap work rtl_work
+
+vlog -vlog01compat -work work +incdir+C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV {C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/ram.v}
+vlog -sv -work work +incdir+C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV {C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/processing_element.sv}
+vlog -sv -work work +incdir+C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV {C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array.sv}
+vlog -sv -work work +incdir+C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV {C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/image_processor.sv}
+vlog -sv -work work +incdir+C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV {C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/memory_wrapper.sv}
+
+vlog -sv -work work +incdir+C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV {C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/image_processor_tb.sv}
+
+vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs="+acc"  image_processor_tb
+
+add wave *
+view structure
+view signals
+run -all

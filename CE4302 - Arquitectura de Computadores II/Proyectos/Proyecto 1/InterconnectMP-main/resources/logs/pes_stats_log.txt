@@ -1,0 +1,176 @@
+
+[2025-04-30 12:20:10] 
+============ PE 0 Stats ============
+Total Messages:      14
+  Sent:              8 (57.14%)
+  Received:          8
+  Discarded:         6 (42.86%)
+
+Transfer Times (μs):
+  Average:           18.57
+  Min:               1.32
+  Max:               74.80
+
+Message Sizes (bytes):
+  Average:           176.00
+  Total:             1408
+
+Time Analysis (μs):
+  Active:            125726 (16.52%)
+  Inactive:          635435 (83.48%)
+  Total:             761161.00
+====================================
+
+[2025-04-30 12:20:10] 
+============ PE 1 Stats ============
+Total Messages:      12
+  Sent:              9 (75.00%)
+  Received:          9
+  Discarded:         3 (25.00%)
+
+Transfer Times (μs):
+  Average:           12.46
+  Min:               1.35
+  Max:               59.32
+
+Message Sizes (bytes):
+  Average:           152.00
+  Total:             1368
+
+Time Analysis (μs):
+  Active:            176625 (22.21%)
+  Inactive:          618707 (77.79%)
+  Total:             795332.00
+====================================
+
+[2025-04-30 12:20:10] 
+============ PE 2 Stats ============
+Total Messages:      13
+  Sent:              8 (61.54%)
+  Received:          8
+  Discarded:         5 (38.46%)
+
+Transfer Times (μs):
+  Average:           19.76
+  Min:               1.15
+  Max:               122.24
+
+Message Sizes (bytes):
+  Average:           198.00
+  Total:             1584
+
+Time Analysis (μs):
+  Active:            156885 (20.16%)
+  Inactive:          621229 (79.84%)
+  Total:             778114.00
+====================================
+
+[2025-04-30 12:20:10] 
+============ PE 3 Stats ============
+Total Messages:      13
+  Sent:              10 (76.92%)
+  Received:          10
+  Discarded:         3 (23.08%)
+
+Transfer Times (μs):
+  Average:           14.38
+  Min:               1.22
+  Max:               88.58
+
+Message Sizes (bytes):
+  Average:           126.40
+  Total:             1264
+
+Time Analysis (μs):
+  Active:            44295 (5.76%)
+  Inactive:          725097 (94.24%)
+  Total:             769392.00
+====================================
+
+[2025-04-30 12:20:10] 
+============ PE 4 Stats ============
+Total Messages:      13
+  Sent:              10 (76.92%)
+  Received:          10
+  Discarded:         3 (23.08%)
+
+Transfer Times (μs):
+  Average:           17.70
+  Min:               1.36
+  Max:               77.00
+
+Message Sizes (bytes):
+  Average:           179.20
+  Total:             1792
+
+Time Analysis (μs):
+  Active:            54843 (7.03%)
+  Inactive:          725325 (92.97%)
+  Total:             780168.00
+====================================
+
+[2025-04-30 12:20:10] 
+============ PE 5 Stats ============
+Total Messages:      13
+  Sent:              11 (84.62%)
+  Received:          11
+  Discarded:         2 (15.38%)
+
+Transfer Times (μs):
+  Average:           12.90
+  Min:               1.52
+  Max:               61.48
+
+Message Sizes (bytes):
+  Average:           147.64
+  Total:             1624
+
+Time Analysis (μs):
+  Active:            24556 (3.12%)
+  Inactive:          762225 (96.88%)
+  Total:             786781.00
+====================================
+
+[2025-04-30 12:20:10] 
+============ PE 6 Stats ============
+Total Messages:      13
+  Sent:              10 (76.92%)
+  Received:          10
+  Discarded:         3 (23.08%)
+
+Transfer Times (μs):
+  Average:           23.62
+  Min:               0.95
+  Max:               136.97
+
+Message Sizes (bytes):
+  Average:           212.80
+  Total:             2128
+
+Time Analysis (μs):
+  Active:            148565 (18.51%)
+  Inactive:          654129 (81.49%)
+  Total:             802694.00
+====================================
+
+[2025-04-30 12:20:10] 
+============ PE 7 Stats ============
+Total Messages:      13
+  Sent:              12 (92.31%)
+  Received:          12
+  Discarded:         1 (7.69%)
+
+Transfer Times (μs):
+  Average:           8.07
+  Min:               1.65
+  Max:               48.69
+
+Message Sizes (bytes):
+  Average:           81.33
+  Total:             976
+
+Time Analysis (μs):
+  Active:            4870 (0.64%)
+  Inactive:          757963 (99.36%)
+  Total:             762833.00
+====================================

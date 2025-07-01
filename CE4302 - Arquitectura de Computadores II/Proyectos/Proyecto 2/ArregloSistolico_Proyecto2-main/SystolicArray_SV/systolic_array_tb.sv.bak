@@ -1,0 +1,105 @@
+module systolic_array_tb;
+
+    // Parameters
+    localparam CLK_PERIOD = 10;
+    localparam SIZE = 4;
+    localparam DATA_WIDTH = 16;
+    localparam RESULT_WIDTH = 32;
+    
+    // Signals
+    logic clk;
+    logic reset;
+    logic enable;
+    logic load_weights;
+    logic signed [DATA_WIDTH-1:0] weight_data [0:SIZE-1][0:SIZE-1];
+    logic signed [DATA_WIDTH-1:0] input_data [0:SIZE-1][0:SIZE-1];
+    logic signed [RESULT_WIDTH-1:0] output_data [0:SIZE-1][0:SIZE-1];
+    
+    // Expected results (calculated from C++ model)
+    logic signed [RESULT_WIDTH-1:0] expected_output [0:SIZE-1][0:SIZE-1] = '{
+        '{32'd98, 32'd91, 32'd84, 32'd77},
+        '{32'd102, 32'd95, 32'd88, 32'd81},
+        '{32'd106, 32'd99, 32'd92, 32'd85},
+        '{32'd110, 32'd103, 32'd96, 32'd89}
+    };
+    
+    // Instantiate DUT
+    systolic_array #(
+        .SIZE(SIZE),
+        .DATA_WIDTH(DATA_WIDTH),
+        .RESULT_WIDTH(RESULT_WIDTH)
+    ) dut (
+        .clk(clk),
+        .reset(reset),
+        .enable(enable),
+        .load_weights(load_weights),
+        .weight_data(weight_data),
+        .input_data(input_data),
+        .output_data(output_data)
+    );
+    
+    // Clock generation
+    initial begin
+        clk = 0;
+        forever #(CLK_PERIOD/2) clk = ~clk;
+    end
+    
+    // Test sequence
+    initial begin
+        // Initialize
+        reset = 1;
+        enable = 0;
+        load_weights = 0;
+        
+        // Define input and weight matrices
+        input_data = '{
+            '{-29, -25, -25, -27},
+            '{-28, -22, -20, -15},
+            '{-2, 9, 15, 26},
+            '{13, 29, 41, 51}
+        };
+        
+        weight_data = '{
+            '{-2, -1, 0, 1},
+            '{-1, 1, 1, 2},
+            '{0, 1, 2, 1},
+            '{1, 2, 1, 0}
+        };
+        
+        // Reset
+        @(posedge clk); #1;
+        reset = 0;
+        
+        // Load weights
+        @(posedge clk); #1;
+        load_weights = 1;
+        @(posedge clk); #1;
+        load_weights = 0;
+        
+        // Process data (2*SIZE-1 cycles)
+        enable = 1;
+        repeat(2*SIZE-1) @(posedge clk);
+        enable = 0;
+        
+        // Check results
+        @(posedge clk); #1;
+        $display("=== Results ===");
+        for (int i = 0; i < SIZE; i++) begin
+            for (int j = 0; j < SIZE; j++) begin
+                $display("Output[%0d][%0d] = %0d (Expected %0d)", 
+                         i, j, output_data[i][j], expected_output[i][j]);
+                if (output_data[i][j] !== expected_output[i][j]) begin
+                    $error("Mismatch at [%0d][%0d]: Expected %0d, Got %0d",
+                           i, j, expected_output[i][j], output_data[i][j]);
+                end
+            end
+        end
+        
+        if ($error == 0) begin
+            $display("All outputs match expected results!");
+        end
+        
+        $finish;
+    end
+    
+endmodule

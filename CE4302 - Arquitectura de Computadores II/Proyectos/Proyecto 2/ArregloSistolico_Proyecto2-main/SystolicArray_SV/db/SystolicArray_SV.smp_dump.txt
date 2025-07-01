@@ -1,0 +1,54 @@
+
+State Machine - |de10_standard_top|uart_image_controller:main_controller|response_data
+Name response_data.RSP_ERROR response_data.RSP_DONE response_data.RSP_BUSY response_data.RSP_ACK response_data.00000000 response_data.RSP_PONG 
+response_data.00000000 0 0 0 0 0 0 
+response_data.RSP_ACK 0 0 0 1 1 0 
+response_data.RSP_BUSY 0 0 1 0 1 0 
+response_data.RSP_DONE 0 1 0 0 1 0 
+response_data.RSP_ERROR 1 0 0 0 1 0 
+response_data.RSP_PONG 0 0 0 0 1 1 
+
+State Machine - |de10_standard_top|uart_image_controller:main_controller|uart_state
+Name uart_state.SEND_RESULTS uart_state.WAIT_PROCESSING uart_state.START_PROCESSING uart_state.WAIT_TX_COMPLETE uart_state.SEND_RESPONSE uart_state.PROCESS_COMMAND uart_state.UART_IDLE uart_state.ERROR_STATE 
+uart_state.UART_IDLE 0 0 0 0 0 0 0 0 
+uart_state.PROCESS_COMMAND 0 0 0 0 0 1 1 0 
+uart_state.SEND_RESPONSE 0 0 0 0 1 0 1 0 
+uart_state.WAIT_TX_COMPLETE 0 0 0 1 0 0 1 0 
+uart_state.START_PROCESSING 0 0 1 0 0 0 1 0 
+uart_state.WAIT_PROCESSING 0 1 0 0 0 0 1 0 
+uart_state.SEND_RESULTS 1 0 0 0 0 0 1 0 
+uart_state.ERROR_STATE 0 0 0 0 0 0 1 1 
+
+State Machine - |de10_standard_top|uart_image_controller:main_controller|image_processor:img_proc_inst|current_state
+Name current_state.DONE_STATE current_state.WRITE_OUTPUT_DIMENSIONS current_state.NEXT_BLOCK current_state.WRITE_OUTPUT_BLOCK current_state.WAIT_PROCESSING current_state.PROCESS_BLOCK current_state.WAIT_INPUT_BLOCK current_state.READ_INPUT_BLOCK current_state.WAIT_WEIGHTS_DATA current_state.LOAD_WEIGHTS_DATA current_state.WAIT_WEIGHTS_DIM current_state.LOAD_WEIGHTS current_state.WAIT_IMG_DIMENSIONS current_state.READ_IMG_DIMENSIONS current_state.IDLE 
+current_state.IDLE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+current_state.READ_IMG_DIMENSIONS 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 
+current_state.WAIT_IMG_DIMENSIONS 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 
+current_state.LOAD_WEIGHTS 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 
+current_state.WAIT_WEIGHTS_DIM 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 
+current_state.LOAD_WEIGHTS_DATA 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 
+current_state.WAIT_WEIGHTS_DATA 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 
+current_state.READ_INPUT_BLOCK 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 
+current_state.WAIT_INPUT_BLOCK 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 
+current_state.PROCESS_BLOCK 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 
+current_state.WAIT_PROCESSING 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 
+current_state.WRITE_OUTPUT_BLOCK 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 
+current_state.NEXT_BLOCK 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 
+current_state.WRITE_OUTPUT_DIMENSIONS 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1 
+current_state.DONE_STATE 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+
+State Machine - |de10_standard_top|uart_image_controller:main_controller|uart_receiver:uart_rx_inst|state
+Name state.STOP_BIT state.DATA_BITS state.START_BIT state.IDLE state.CLEANUP 
+state.IDLE 0 0 0 0 0 
+state.START_BIT 0 0 1 1 0 
+state.DATA_BITS 0 1 0 1 0 
+state.STOP_BIT 1 0 0 1 0 
+state.CLEANUP 0 0 0 1 1 
+
+State Machine - |de10_standard_top|uart_image_controller:main_controller|uart_transmitter:uart_tx_inst|state
+Name state.STOP state.DATA state.START state.IDLE state.CLEANUP 
+state.IDLE 0 0 0 0 0 
+state.START 0 0 1 1 0 
+state.DATA 0 1 0 1 0 
+state.STOP 1 0 0 1 0 
+state.CLEANUP 0 0 0 1 1 

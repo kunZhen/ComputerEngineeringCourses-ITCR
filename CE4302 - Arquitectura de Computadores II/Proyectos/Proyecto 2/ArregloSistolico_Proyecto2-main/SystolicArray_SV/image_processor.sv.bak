@@ -1,0 +1,170 @@
+module image_processor #(
+    parameter MEM_ADDR_WIDTH = 32,
+    parameter DATA_WIDTH = 16,
+    parameter SIZE = 4         // Tamaño del arreglo sistólico (4x4)
+)(
+    input  logic                      clk,
+    input  logic                      reset,
+    input  logic                      start,          // Inicia el procesamiento
+    output logic                      done,           // Procesamiento completado
+    
+    // Interfaz con memoria
+    output logic [MEM_ADDR_WIDTH-1:0] mem_addr,       // Dirección de memoria
+    output logic                      mem_re,         // Read enable
+    input  logic [31:0]               mem_read_data,  // Dato leído de memoria
+    output logic                      mem_we,         // Write enable
+    output logic [31:0]               mem_write_data, // Dato a escribir
+    
+    // Interfaz con systolic_array
+    output logic [DATA_WIDTH-1:0]     input_block [0:SIZE-1][0:SIZE-1], // Bloque de entrada
+    input  logic [31:0]               output_block [0:SIZE-1][0:SIZE-1], // Bloque de salida
+    output logic                      load_weights,   // Carga pesos al arreglo
+    output logic                      process_block,  // Inicia procesamiento
+    input  logic                      systolic_done   // Procesamiento completado
+);
+
+    // Estados del FSM
+    typedef enum logic [2:0] {
+        IDLE,
+        LOAD_WEIGHTS,
+        READ_IMAGE_HEADER,
+        PROCESS_IMAGE,
+        WRITE_OUTPUT,
+        DONE
+    } state_t;
+
+    state_t current_state, next_state;
+
+    // Registros para control
+    logic [31:0] width, height;
+    logic [31:0] base_input_addr, base_output_addr;
+    logic [31:0] current_row, current_col;
+    logic [15:0] weight_buffer [0:SIZE-1][0:SIZE-1];
+
+    // Direcciones fijas (ajustar según tu diseño)
+    localparam WEIGHTS_ADDR = 32'h00000000; // Dirección base de pesos
+    localparam INPUT_ADDR   = 32'h00000020; // Dirección base de imagen (0x20)
+    localparam OUTPUT_ADDR  = 32'h00010000; // Dirección base de salida
+
+    // Conversión de formatos
+    function logic signed [15:0] convertTo16BitSigned(input logic [7:0] pixel);
+        return {8'b0, pixel} - 16'sd128; // Centrado en cero (-128 a 127)
+    endfunction
+
+    function logic [7:0] convertTo8BitUnsigned(input logic signed [31:0] value);
+        logic signed [31:0] clamped;
+        clamped = (value < -128) ? -128 : (value > 127) ? 127 : value;
+        return clamped + 8'd128; // Vuelve a 0-255
+    endfunction
+
+    // Lógica de estado
+    always_ff @(posedge clk or posedge reset) begin
+        if (reset) begin
+            current_state <= IDLE;
+            width <= 0;
+            height <= 0;
+            current_row <= 0;
+            current_col <= 0;
+            base_input_addr <= INPUT_ADDR;
+            base_output_addr <= OUTPUT_ADDR;
+            load_weights <= 0;
+            process_block <= 0;
+            done <= 0;
+        end else begin
+            current_state <= next_state;
+
+            case (current_state)
+                LOAD_WEIGHTS: begin
+                    // Carga pesos en weight_buffer (similar a systolic_array.sv)
+                    if (mem_re && mem_addr >= WEIGHTS_ADDR + 8 && mem_addr < WEIGHTS_ADDR + 8 + SIZE*SIZE) begin
+                        for (int i = 0; i < SIZE; i++) begin
+                            for (int j = 0; j < SIZE; j++) begin
+                                weight_buffer[i][j] <= $signed(mem_read_data[7:0]); // Ajustar según formato
+                            end
+                        end
+                    end
+                end
+
+                PROCESS_IMAGE: begin
+                    if (systolic_done) begin
+                        current_col <= current_col + SIZE;
+                        if (current_col + SIZE >= width) begin
+                            current_col <= 0;
+                            current_row <= current_row + SIZE;
+                        end
+                    end
+                end
+            endcase
+        end
+    end
+
+    // Lógica de próximo estado
+    always_comb begin
+        next_state = current_state;
+        mem_re = 0;
+        mem_we = 0;
+        mem_addr = 0;
+        mem_write_data = 0;
+
+        case (current_state)
+            IDLE: begin
+                if (start) next_state = LOAD_WEIGHTS;
+            end
+
+            LOAD_WEIGHTS: begin
+                mem_re = 1;
+                mem_addr = WEIGHTS_ADDR;
+                next_state = READ_IMAGE_HEADER;
+            end
+
+            READ_IMAGE_HEADER: begin
+                mem_re = 1;
+                mem_addr = base_input_addr;
+                width = mem_read_data;
+                mem_addr = base_input_addr + 4;
+                height = mem_read_data;
+                next_state = PROCESS_IMAGE;
+            end
+
+            PROCESS_IMAGE: begin
+                if (current_row < height && current_col < width) begin
+                    process_block = 1;
+                    // Lógica para cargar input_block desde memoria (similar a getImageBlock en C++)
+                    for (int i = 0; i < SIZE; i++) begin
+                        for (int j = 0; j < SIZE; j++) begin
+                            logic [31:0] pixel_addr = base_input_addr + 8 + (current_row + i) * width + (current_col + j);
+                            mem_re = 1;
+                            mem_addr = pixel_addr;
+                            input_block[i][j] = convertTo16BitSigned(mem_read_data[7:0]); // Ajustar según alineación
+                        end
+                    end
+                end else begin
+                    next_state = WRITE_OUTPUT;
+                end
+            end
+
+            WRITE_OUTPUT: begin
+                mem_we = 1;
+                // Lógica para guardar output_block en memoria (similar a processImage en C++)
+                for (int i = 0; i < SIZE; i++) begin
+                    for (int j = 0; j < SIZE; j += 4) begin
+                        logic [31:0] word = 0;
+                        for (int k = 0; k < 4; k++) begin
+                            if (j + k < SIZE) begin
+                                word |= (convertTo8BitUnsigned(output_block[i][j + k]) << (8 * k));
+                            end
+                        end
+                        mem_addr = base_output_addr + 8 + (current_row + i) * width + (current_col + j);
+                        mem_write_data = word;
+                    end
+                end
+                next_state = DONE;
+            end
+
+            DONE: begin
+                done = 1;
+            end
+        endcase
+    end
+
+endmodule

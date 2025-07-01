@@ -1,0 +1,17 @@
+1.
+a) Mejor: 110ns Peor: 240ns
+b) 29.512 más rápido sin comunicación
+c) Matriz (menos saltos)
+d) Anillo reducer a 28 procesadores
+
+2.
+a) 0.9677
+b) 1.29 (no es posible)
+
+3.
+a) 4ms. Acciones: paralelizar más el Código
+b) Opción 1. Mejor speedup (1.72)
+c) 11.62ms
+
+4.
+a) CPI=0.6 , 1.2 más rápido sin comunicación

@@ -1,0 +1,303 @@
+// =============================================
+// FIX ROBUSTO SIMPLIFICADO - uart_image_controller
+// Elimina dependencia de uart_state_prev
+// Usa flag dedicado para tracking de SEND_RESULTS
+// =============================================
+
+module uart_image_controller #(
+    parameter CLOCK_FREQ = 50_000_000,
+    parameter BAUD_RATE = 9600
+)(
+    // Señales del sistema
+    input logic clk,
+    input logic reset,
+    
+    // Interfaz UART (HC-05)
+    input logic uart_rx,
+    output logic uart_tx,
+    
+    // LEDs de estado (opcional)
+    output logic [7:0] status_leds,
+    
+    // Señales de debug
+    output logic [7:0] last_command,
+    output logic [7:0] last_response,
+    output logic communication_active
+);
+
+    // =============================================
+    // Comandos del Protocolo
+    // =============================================
+    localparam CMD_START     = 8'h53;  // 'S' - Iniciar procesamiento
+    localparam CMD_STATUS    = 8'h3F;  // '?' - Consultar estado
+    localparam CMD_RESULTS   = 8'h52;  // 'R' - Obtener resultados
+    localparam CMD_PING      = 8'h50;  // 'P' - Ping test
+    
+    localparam RSP_ACK       = 8'h41;  // 'A' - Acknowledgment
+    localparam RSP_BUSY      = 8'h42;  // 'B' - Busy processing
+    localparam RSP_DONE      = 8'h44;  // 'D' - Done
+    localparam RSP_ERROR     = 8'h45;  // 'E' - Error
+    localparam RSP_PONG      = 8'h4F;  // 'O' - Pong response
+
+    // =============================================
+    // Señales Internas
+    // =============================================
+    
+    // UART
+    logic [7:0] tx_data, rx_data;
+    logic tx_send, tx_busy, tx_done;
+    logic rx_valid, rx_error;
+    
+    // Image Processor
+    logic img_start, img_done;
+    logic [31:0] img_debug_width, img_debug_height;
+    logic [7:0] img_debug_block_row, img_debug_block_col;
+    logic [3:0] img_debug_state;
+    logic img_processing_complete;
+    logic [31:0] img_total_mac_ops, img_total_cycles;
+    logic [31:0] img_total_mem_accesses, img_total_bytes;
+    
+    // Control FSM
+    typedef enum logic [3:0] {
+        UART_IDLE           = 4'd0,
+        PROCESS_COMMAND     = 4'd1,
+        SEND_RESPONSE       = 4'd2,
+        WAIT_TX_COMPLETE    = 4'd3,
+        START_PROCESSING    = 4'd4,
+        WAIT_PROCESSING     = 4'd5,
+        SEND_RESULTS        = 4'd6,
+        SEND_STATUS_DATA    = 4'd7,
+        ERROR_STATE         = 4'd8
+    } uart_state_t;
+    
+    uart_state_t uart_state;
+    logic [7:0] response_data;
+    logic [2:0] result_counter;
+    
+    // =============================================
+    // NUEVO: Flag dedicado para tracking de SEND_RESULTS
+    // =============================================
+    logic sending_results_flag;
+
+    // =============================================
+    // Instanciación de Módulos
+    // =============================================
+    
+    // UART Transmisor
+    uart_transmitter #(
+        .CLOCK_FREQ(CLOCK_FREQ),
+        .BAUD_RATE(BAUD_RATE)
+    ) uart_tx_inst (
+        .clk(clk),
+        .reset(reset),
+        .data_in(tx_data),
+        .send(tx_send),
+        .tx(uart_tx),
+        .busy(tx_busy),
+        .done(tx_done)
+    );
+    
+    // UART Receptor
+    uart_receiver #(
+        .CLOCK_FREQ(CLOCK_FREQ),
+        .BAUD_RATE(BAUD_RATE)
+    ) uart_rx_inst (
+        .clk(clk),
+        .reset(reset),
+        .rx(uart_rx),
+        .data_out(rx_data),
+        .data_valid(rx_valid),
+        .error(rx_error)
+    );
+    
+    // Image Processor (tu módulo existente)
+    image_processor img_proc_inst (
+        .clk(clk),
+        .reset(reset),
+        .start(img_start),
+        .done(img_done),
+        .debug_width(img_debug_width),
+        .debug_height(img_debug_height),
+        .debug_block_row(img_debug_block_row),
+        .debug_block_col(img_debug_block_col),
+        .debug_state(img_debug_state),
+        .processing_complete(img_processing_complete),
+        .total_mem_accesses(img_total_mem_accesses),
+        .total_bytes_transferred(img_total_bytes),
+        .total_mac_operations(img_total_mac_ops),
+        .total_processing_cycles(img_total_cycles)
+    );
+
+    // =============================================
+    // FSM Principal de Control - VERSIÓN ROBUSTA
+    // =============================================
+    
+    always_ff @(posedge clk) begin
+        if (reset) begin
+            uart_state <= UART_IDLE;
+            img_start <= 1'b0;
+            tx_send <= 1'b0;
+            tx_data <= 8'h00;
+            response_data <= 8'h00;
+            result_counter <= 3'd0;
+            sending_results_flag <= 1'b0;  // NUEVO
+            last_command <= 8'h00;
+            last_response <= 8'h00;
+        end else begin
+            // Pulsos por defecto
+            tx_send <= 1'b0;
+            img_start <= 1'b0;
+            
+            case (uart_state)
+                UART_IDLE: begin
+                    sending_results_flag <= 1'b0;  // Clear flag en IDLE
+                    if (rx_valid && !rx_error) begin
+                        last_command <= rx_data;
+                        uart_state <= PROCESS_COMMAND;
+                    end else if (rx_error) begin
+                        uart_state <= ERROR_STATE;
+                    end
+                end
+                
+                PROCESS_COMMAND: begin
+                    case (last_command)
+                        CMD_PING: begin
+                            response_data <= RSP_PONG;
+                            uart_state <= SEND_RESPONSE;
+                        end
+                        
+                        CMD_START: begin
+                            if (img_debug_state != 4'd0 && !img_done) begin
+                                // Ya está procesando
+                                response_data <= RSP_BUSY;
+                                uart_state <= SEND_RESPONSE;
+                            end else begin
+                                response_data <= RSP_ACK;
+                                uart_state <= SEND_RESPONSE;
+                                // Después del ACK, iniciar procesamiento
+                            end
+                        end
+                        
+                        CMD_STATUS: begin
+                            if (img_done) begin
+                                response_data <= RSP_DONE;
+                            end else if (img_debug_state != 4'd0) begin
+                                response_data <= RSP_BUSY;
+                            end else begin
+                                response_data <= RSP_ACK;  // Idle
+                            end
+                            uart_state <= SEND_RESPONSE;
+                        end
+                        
+                        CMD_RESULTS: begin
+                            if (img_done) begin
+                                // Preparar para enviar resultados
+                                result_counter <= 3'd0;
+                                sending_results_flag <= 1'b1;  // NUEVO: Set flag
+                                uart_state <= SEND_RESULTS;
+                            end else begin
+                                response_data <= RSP_BUSY;
+                                uart_state <= SEND_RESPONSE;
+                            end
+                        end
+                        
+                        default: begin
+                            response_data <= RSP_ERROR;
+                            uart_state <= SEND_RESPONSE;
+                        end
+                    endcase
+                end
+                
+                SEND_RESPONSE: begin
+                    if (!tx_busy) begin
+                        tx_data <= response_data;
+                        tx_send <= 1'b1;
+                        last_response <= response_data;
+                        uart_state <= WAIT_TX_COMPLETE;
+                    end
+                end
+                
+                SEND_RESULTS: begin
+                    if (!tx_busy) begin
+                        // Enviar byte por byte de los resultados (LITTLE ENDIAN)
+                        case (result_counter)
+                            3'd0: tx_data <= img_total_mac_ops[7:0];    // MAC operations LSB
+                            3'd1: tx_data <= img_total_mac_ops[15:8];   // MAC operations
+                            3'd2: tx_data <= img_total_mac_ops[23:16];  // MAC operations  
+                            3'd3: tx_data <= img_total_mac_ops[31:24];  // MAC operations MSB
+                            3'd4: tx_data <= img_total_cycles[7:0];     // Cycles LSB
+                            3'd5: tx_data <= img_total_cycles[15:8];    // Cycles
+                            3'd6: tx_data <= img_total_cycles[23:16];   // Cycles
+                            3'd7: tx_data <= img_total_cycles[31:24];   // Cycles MSB
+                        endcase
+                        
+                        tx_send <= 1'b1;
+                        last_response <= tx_data;
+                        uart_state <= WAIT_TX_COMPLETE;
+                    end
+                end
+                
+                WAIT_TX_COMPLETE: begin
+                    if (tx_done) begin
+                        // NUEVO: Lógica simplificada usando flag
+                        if (sending_results_flag) begin
+                            // Estamos en modo envío de resultados
+                            if (result_counter < 3'd7) begin
+                                result_counter <= result_counter + 1;
+                                uart_state <= SEND_RESULTS;  // Continuar enviando
+                            end else begin
+                                // Terminamos de enviar todos los bytes
+                                result_counter <= 3'd0;
+                                sending_results_flag <= 1'b0;
+                                uart_state <= UART_IDLE;
+                            end
+                        end else if (last_command == CMD_START && response_data == RSP_ACK) begin
+                            uart_state <= START_PROCESSING;
+                        end else begin
+                            uart_state <= UART_IDLE;
+                        end
+                    end
+                end
+                
+                START_PROCESSING: begin
+                    img_start <= 1'b1;  // Pulso de inicio
+                    uart_state <= WAIT_PROCESSING;
+                end
+                
+                WAIT_PROCESSING: begin
+                    if (img_done) begin
+                        uart_state <= UART_IDLE;
+                    end
+                    // Continuar en espera hasta que termine
+                end
+                
+                ERROR_STATE: begin
+                    if (!tx_busy) begin
+                        tx_data <= RSP_ERROR;
+                        tx_send <= 1'b1;
+                        uart_state <= WAIT_TX_COMPLETE;
+                    end
+                end
+            endcase
+        end
+    end
+
+    // =============================================
+    // Señales de Salida y Status
+    // =============================================
+    
+    // LEDs de estado
+    always_comb begin
+        status_leds[0] = img_done;                     // Procesamiento terminado
+        status_leds[1] = (img_debug_state != 4'd0);    // Procesando
+        status_leds[2] = rx_valid;                     // Dato recibido
+        status_leds[3] = tx_busy;                      // Transmitiendo
+        status_leds[4] = rx_error;                     // Error UART
+        status_leds[5] = (uart_state == ERROR_STATE);  // Error general
+        status_leds[6] = communication_active;         // Comunicación activa
+        status_leds[7] = sending_results_flag;         // NUEVO: Enviando resultados
+    end
+    
+    assign communication_active = (uart_state != UART_IDLE);
+
+endmodule

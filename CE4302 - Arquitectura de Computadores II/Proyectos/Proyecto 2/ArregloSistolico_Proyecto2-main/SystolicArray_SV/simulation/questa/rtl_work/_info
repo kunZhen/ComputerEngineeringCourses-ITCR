@@ -1,0 +1,165 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/simulation/questa
+vimage_processor
+Z1 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
+Z2 !s110 1750319284
+!i10b 1
+!s100 [7FO;XYzajbQa5Oo4Q2Ii0
+Z3 !s11b Dg1SIo80bB@j0V0VzS_@n1
+I5ffXf2;]BkBF5@JzYPT:z2
+Z4 VDg1SIo80bB@j0V0VzS_@n1
+S1
+R0
+w1750319238
+8C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/image_processor.sv
+FC:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/image_processor.sv
+!i122 3
+L0 11 613
+Z5 OV;L;2020.1;71
+r1
+!s85 0
+31
+Z6 !s108 1750319283.000000
+!s107 C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/image_processor.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV|C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/image_processor.sv|
+!i113 1
+Z7 o-sv -work work
+Z8 !s92 -sv -work work +incdir+C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV
+Z9 tCvgOpt 0
+vimage_processor_tb
+R1
+R2
+!i10b 1
+!s100 dM:iH@R;L3b1XgSW:V6652
+R3
+IR:=MbZZXK;RK>SzQOX]RB3
+R4
+S1
+R0
+w1750305337
+8C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/image_processor_tb.sv
+FC:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/image_processor_tb.sv
+!i122 5
+L0 14 594
+R5
+r1
+!s85 0
+31
+Z10 !s108 1750319284.000000
+!s107 C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/image_processor_tb.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV|C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/image_processor_tb.sv|
+!i113 1
+R7
+R8
+R9
+vmemory_wrapper
+R1
+R2
+!i10b 1
+!s100 B2FWXG=NW0Ih3RPcfiPiE2
+R3
+Ib]0_Z=kb9E3Hjf064Q`>11
+R4
+S1
+R0
+w1750295945
+8C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/memory_wrapper.sv
+FC:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/memory_wrapper.sv
+!i122 4
+L0 11 267
+R5
+r1
+!s85 0
+31
+R10
+!s107 C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/memory_wrapper.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV|C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/memory_wrapper.sv|
+!i113 1
+R7
+R8
+R9
+vprocessing_element
+R1
+Z11 !s110 1750319283
+!i10b 1
+!s100 QA5a<_4Q5YFaWZ6[:7b=a2
+R3
+I`ab:3G]FDhjG@>M1QP[l70
+R4
+S1
+R0
+Z12 w1750172980
+8C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/processing_element.sv
+FC:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/processing_element.sv
+!i122 1
+L0 3 62
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/processing_element.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV|C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/processing_element.sv|
+!i113 1
+R7
+R8
+R9
+vram
+R11
+!i10b 1
+!s100 U8K`=AhK[QF2HYoXYdDj]2
+R3
+IR>RgBN0i6:Fn?81<JQ?RN0
+R4
+R0
+w1750303497
+8C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/ram.v
+FC:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/ram.v
+!i122 0
+L0 40 78
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/ram.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV|C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/ram.v|
+!i113 1
+o-vlog01compat -work work
+!s92 -vlog01compat -work work +incdir+C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV
+R9
+vsystolic_array
+R1
+R11
+!i10b 1
+!s100 kC`S@<>J6b^PKS?9ab8gk1
+R3
+I`HPRa``n@7T?=7]UTPgYj3
+R4
+S1
+R0
+R12
+8C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array.sv
+FC:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array.sv
+!i122 2
+L0 3 188
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV|C:/Users/Usuario/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array.sv|
+!i113 1
+R7
+R8
+R9

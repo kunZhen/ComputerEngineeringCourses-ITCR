@@ -1,0 +1,71 @@
+module systolic_array #(
+    parameter SIZE = 4,
+    parameter DATA_WIDTH = 16,
+    parameter RESULT_WIDTH = 32
+)(
+    input logic clk,
+    input logic reset,
+    input logic enable,
+    
+    // Weight loading interface
+    input logic load_weights,
+    input logic signed [DATA_WIDTH-1:0] weight_data [0:SIZE-1][0:SIZE-1],
+    
+    // Input data interface
+    input logic signed [DATA_WIDTH-1:0] input_data [0:SIZE-1][0:SIZE-1],
+    
+    // Output interface
+    output logic signed [RESULT_WIDTH-1:0] output_data [0:SIZE-1][0:SIZE-1]
+);
+
+    // Internal signals
+    logic signed [DATA_WIDTH-1:0] weight_reg [0:SIZE-1][0:SIZE-1];
+    logic signed [RESULT_WIDTH-1:0] partial_sums [0:SIZE-1][0:SIZE-1];
+    logic signed [RESULT_WIDTH-1:0] results [0:SIZE-1][0:SIZE-1];
+    
+    // Instantiate processing elements
+    genvar i, j;
+    generate
+        for (i = 0; i < SIZE; i++) begin : row_gen
+            for (j = 0; j < SIZE; j++) begin : col_gen
+                processing_element pe (
+                    .clk(clk),
+                    .reset(reset),
+                    .enable(enable),
+                    .load_weight(load_weights),
+                    .input_data(input_data[i][j]),
+                    .weight_data(weight_data[i][j]),
+                    .partial_in((i < SIZE-1) ? partial_sums[i+1][j] : 32'sd0),
+                    .partial_out(partial_sums[i][j])
+                );
+            end
+        end
+    endgenerate
+    
+    // Capture final results
+    always_ff @(posedge clk) begin
+        if (reset) begin
+            for (int i = 0; i < SIZE; i++) begin
+                for (int j = 0; j < SIZE; j++) begin
+                    results[i][j] <= 0;
+                end
+            end
+        end else if (enable) begin
+            for (int i = 0; i < SIZE; i++) begin
+                for (int j = 0; j < SIZE; j++) begin
+                    // Clamp and offset as in C++ code
+                    if (partial_sums[i][j] < -128) begin
+                        results[i][j] <= 0;
+                    end else if (partial_sums[i][j] > 127) begin
+                        results[i][j] <= 255;
+                    end else begin
+                        results[i][j] <= partial_sums[i][j] + 128;
+                    end
+                end
+            end
+        end
+    end
+    
+    assign output_data = results;
+
+endmodule

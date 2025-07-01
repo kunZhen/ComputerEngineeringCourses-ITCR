@@ -1,0 +1,374 @@
+# Current time Sat Jun 14 20:37:23 2025
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "10.5b"
+# Version = "2016.10"
+# Date = "Oct  5 2016"
+# Platform = win32pe
+# Signature = a4da31216fa3031746f0a74423efc007
+# 0    0x0068386f: '<unknown (@0x68386f)>'
+# 1    0xfdea4462: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:98'
+# 2    0xfdea4462: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:98'
+# 3    0x0061a9de: '<unknown (@0x61a9de)>'
+# 4    0x0078056a: '<unknown (@0x78056a)>'
+# 5    0x6d077132: 'getenv + 0x67' in 'c:\windows\system32\msvcr120.dll'
+# End of Stack Trace
+
+
+# Current time Sat Jun 14 20:38:13 2025
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "10.5b"
+# Version = "2016.10"
+# Date = "Oct  5 2016"
+# Platform = win32pe
+# Signature = a4da31216fa3031746f0a74423efc007
+# 0    0x0068386f: '<unknown (@0x68386f)>'
+# 1    0xfdea4462: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:98'
+# 2    0xfdea4462: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:98'
+# 3    0x0061a9de: '<unknown (@0x61a9de)>'
+# 4    0x0078056a: '<unknown (@0x78056a)>'
+# 5    0x6d077132: 'getenv + 0x67' in 'c:\windows\system32\msvcr120.dll'
+# End of Stack Trace
+
+
+# Current time Sat Jun 14 20:40:17 2025
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "10.5b"
+# Version = "2016.10"
+# Date = "Oct  5 2016"
+# Platform = win32pe
+# Signature = a4da31216fa3031746f0a74423efc007
+# 0    0x0068386f: '<unknown (@0x68386f)>'
+# 1    0xfdea4306: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:86'
+# 2    0xfdea4306: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:86'
+# 3    0x0061a9de: '<unknown (@0x61a9de)>'
+# 4    0x0078056a: '<unknown (@0x78056a)>'
+# 5    0x6d077132: 'getenv + 0x67' in 'c:\windows\system32\msvcr120.dll'
+# End of Stack Trace
+
+
+# Current time Sat Jun 14 20:42:48 2025
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "10.5b"
+# Version = "2016.10"
+# Date = "Oct  5 2016"
+# Platform = win32pe
+# Signature = a4da31216fa3031746f0a74423efc007
+# 0    0x0068386f: '<unknown (@0x68386f)>'
+# 1    0xfdea4306: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:86'
+# 2    0xfdea4306: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:86'
+# 3    0x0061a9de: '<unknown (@0x61a9de)>'
+# 4    0x0078056a: '<unknown (@0x78056a)>'
+# 5    0x6d077132: 'getenv + 0x67' in 'c:\windows\system32\msvcr120.dll'
+# End of Stack Trace
+
+
+# Current time Sat Jun 14 20:45:43 2025
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "10.5b"
+# Version = "2016.10"
+# Date = "Oct  5 2016"
+# Platform = win32pe
+# Signature = a4da31216fa3031746f0a74423efc007
+# 0    0x0068386f: '<unknown (@0x68386f)>'
+# 1    0xfdea4306: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:86'
+# 2    0xfdea4306: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:86'
+# 3    0x0061a9de: '<unknown (@0x61a9de)>'
+# 4    0x0078056a: '<unknown (@0x78056a)>'
+# 5    0x6d077132: 'getenv + 0x67' in 'c:\windows\system32\msvcr120.dll'
+# End of Stack Trace
+
+
+# Current time Sat Jun 14 20:46:30 2025
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "10.5b"
+# Version = "2016.10"
+# Date = "Oct  5 2016"
+# Platform = win32pe
+# Signature = a4da31216fa3031746f0a74423efc007
+# 0    0x0068386f: '<unknown (@0x68386f)>'
+# 1    0xfdea4306: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:86'
+# 2    0xfdea4306: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:86'
+# 3    0x0061a9de: '<unknown (@0x61a9de)>'
+# 4    0x0078056a: '<unknown (@0x78056a)>'
+# 5    0x6d077132: 'getenv + 0x67' in 'c:\windows\system32\msvcr120.dll'
+# End of Stack Trace
+
+
+# Current time Sat Jun 14 20:47:10 2025
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "10.5b"
+# Version = "2016.10"
+# Date = "Oct  5 2016"
+# Platform = win32pe
+# Signature = a4da31216fa3031746f0a74423efc007
+# 0    0x0068386f: '<unknown (@0x68386f)>'
+# 1    0xfdea4306: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:86'
+# 2    0xfdea4306: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:86'
+# 3    0x0061a9de: '<unknown (@0x61a9de)>'
+# 4    0x0078056a: '<unknown (@0x78056a)>'
+# 5    0x6d077132: 'getenv + 0x67' in 'c:\windows\system32\msvcr120.dll'
+# End of Stack Trace
+
+
+# Current time Sat Jun 14 20:50:31 2025
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "10.5b"
+# Version = "2016.10"
+# Date = "Oct  5 2016"
+# Platform = win32pe
+# Signature = a4da31216fa3031746f0a74423efc007
+# 0    0x0068386f: '<unknown (@0x68386f)>'
+# 1    0xfdea4306: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:86'
+# 2    0xfdea4306: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:86'
+# 3    0x0061a9de: '<unknown (@0x61a9de)>'
+# 4    0x0078056a: '<unknown (@0x78056a)>'
+# 5    0x6d077132: 'getenv + 0x67' in 'c:\windows\system32\msvcr120.dll'
+# End of Stack Trace
+
+
+# Current time Sat Jun 14 20:58:45 2025
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "10.5b"
+# Version = "2016.10"
+# Date = "Oct  5 2016"
+# Platform = win32pe
+# Signature = a4da31216fa3031746f0a74423efc007
+# 0    0x0068386f: '<unknown (@0x68386f)>'
+# 1    0xfdea4306: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:86'
+# 2    0xfdea4306: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:86'
+# 3    0x0061a9de: '<unknown (@0x61a9de)>'
+# 4    0x0078056a: '<unknown (@0x78056a)>'
+# 5    0x6d077132: 'getenv + 0x67' in 'c:\windows\system32\msvcr120.dll'
+# End of Stack Trace
+
+
+# Current time Sat Jun 14 21:01:17 2025
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "10.5b"
+# Version = "2016.10"
+# Date = "Oct  5 2016"
+# Platform = win32pe
+# Signature = a4da31216fa3031746f0a74423efc007
+# 0    0x0068386f: '<unknown (@0x68386f)>'
+# 1    0xfdea4306: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:82'
+# 2    0xfdea4306: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:82'
+# 3    0x0061a9de: '<unknown (@0x61a9de)>'
+# 4    0x0078056a: '<unknown (@0x78056a)>'
+# 5    0x6d077132: 'getenv + 0x67' in 'c:\windows\system32\msvcr120.dll'
+# End of Stack Trace
+
+
+# Current time Sat Jun 14 21:03:53 2025
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "10.5b"
+# Version = "2016.10"
+# Date = "Oct  5 2016"
+# Platform = win32pe
+# Signature = a4da31216fa3031746f0a74423efc007
+# 0    0x0068386f: '<unknown (@0x68386f)>'
+# 1    0xfdea4462: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:87'
+# 2    0xfdea4462: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:87'
+# 3    0x0061a9de: '<unknown (@0x61a9de)>'
+# 4    0x0078056a: '<unknown (@0x78056a)>'
+# 5    0x6d077132: 'getenv + 0x67' in 'c:\windows\system32\msvcr120.dll'
+# End of Stack Trace
+
+
+# Current time Sat Jun 14 21:06:31 2025
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "10.5b"
+# Version = "2016.10"
+# Date = "Oct  5 2016"
+# Platform = win32pe
+# Signature = a4da31216fa3031746f0a74423efc007
+# 0    0x0068386f: '<unknown (@0x68386f)>'
+# 1    0xfdea4462: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:87'
+# 2    0xfdea4462: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:87'
+# 3    0x0061a9de: '<unknown (@0x61a9de)>'
+# 4    0x0078056a: '<unknown (@0x78056a)>'
+# 5    0x6d077132: 'getenv + 0x67' in 'c:\windows\system32\msvcr120.dll'
+# End of Stack Trace
+
+
+# Current time Sat Jun 14 21:08:56 2025
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "10.5b"
+# Version = "2016.10"
+# Date = "Oct  5 2016"
+# Platform = win32pe
+# Signature = a4da31216fa3031746f0a74423efc007
+# 0    0x0068386f: '<unknown (@0x68386f)>'
+# 1    0xfdea4462: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:87'
+# 2    0xfdea4462: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:87'
+# 3    0x0061a9de: '<unknown (@0x61a9de)>'
+# 4    0x0078056a: '<unknown (@0x78056a)>'
+# 5    0x6d077132: 'getenv + 0x67' in 'c:\windows\system32\msvcr120.dll'
+# End of Stack Trace
+
+
+# Current time Sat Jun 14 21:22:08 2025
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "10.5b"
+# Version = "2016.10"
+# Date = "Oct  5 2016"
+# Platform = win32pe
+# Signature = a4da31216fa3031746f0a74423efc007
+# 0    0x0068386f: '<unknown (@0x68386f)>'
+# 1    0xfdea4462: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:100'
+# 2    0xfdea4462: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:100'
+# 3    0x0061a9de: '<unknown (@0x61a9de)>'
+# 4    0x0078056a: '<unknown (@0x78056a)>'
+# 5    0x67a67132: 'getenv + 0x67' in 'c:\windows\system32\msvcr120.dll'
+# End of Stack Trace
+
+
+# Current time Sat Jun 14 21:23:12 2025
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "10.5b"
+# Version = "2016.10"
+# Date = "Oct  5 2016"
+# Platform = win32pe
+# Signature = a4da31216fa3031746f0a74423efc007
+# 0    0x0068386f: '<unknown (@0x68386f)>'
+# 1    0xfdea4462: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:100'
+# 2    0xfdea4462: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:100'
+# 3    0x0061a9de: '<unknown (@0x61a9de)>'
+# 4    0x0078056a: '<unknown (@0x78056a)>'
+# 5    0x67a67132: 'getenv + 0x67' in 'c:\windows\system32\msvcr120.dll'
+# End of Stack Trace
+
+
+# Current time Sat Jun 14 21:29:40 2025
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "10.5b"
+# Version = "2016.10"
+# Date = "Oct  5 2016"
+# Platform = win32pe
+# Signature = a4da31216fa3031746f0a74423efc007
+# 0    0x0068386f: '<unknown (@0x68386f)>'
+# 1    0xfdea4462: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:98'
+# 2    0xfdea4462: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:98'
+# 3    0x0061a9de: '<unknown (@0x61a9de)>'
+# 4    0x0078056a: '<unknown (@0x78056a)>'
+# 5    0x67a67132: 'getenv + 0x67' in 'c:\windows\system32\msvcr120.dll'
+# End of Stack Trace
+
+
+# Current time Sat Jun 14 21:52:19 2025
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "10.5b"
+# Version = "2016.10"
+# Date = "Oct  5 2016"
+# Platform = win32pe
+# Signature = a4da31216fa3031746f0a74423efc007
+# 0    0x0068386f: '<unknown (@0x68386f)>'
+# 1    0xfdea4960: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:131'
+# 2    0xfdea4960: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:131'
+# 3    0x0061a9de: '<unknown (@0x61a9de)>'
+# 4    0x0078056a: '<unknown (@0x78056a)>'
+# 5    0x67a67132: 'getenv + 0x67' in 'c:\windows\system32\msvcr120.dll'
+# End of Stack Trace
+
+
+# Current time Sat Jun 14 21:58:09 2025
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "10.5b"
+# Version = "2016.10"
+# Date = "Oct  5 2016"
+# Platform = win32pe
+# Signature = a4da31216fa3031746f0a74423efc007
+# 0    0x0068386f: '<unknown (@0x68386f)>'
+# 1    0xfdea4aac: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:135'
+# 2    0xfdea4aac: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:135'
+# 3    0x0061a9de: '<unknown (@0x61a9de)>'
+# 4    0x0078056a: '<unknown (@0x78056a)>'
+# 5    0x67a67132: 'getenv + 0x67' in 'c:\windows\system32\msvcr120.dll'
+# End of Stack Trace
+
+
+# Current time Sat Jun 14 22:09:05 2025
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "10.5b"
+# Version = "2016.10"
+# Date = "Oct  5 2016"
+# Platform = win32pe
+# Signature = a4da31216fa3031746f0a74423efc007
+# 0    0x0068386f: '<unknown (@0x68386f)>'
+# 1    0xfdea493a: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:148'
+# 2    0xfdea493a: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:148'
+# 3    0x0061a9de: '<unknown (@0x61a9de)>'
+# 4    0x0078056a: '<unknown (@0x78056a)>'
+# 5    0x6d077132: 'getenv + 0x67' in 'c:\windows\system32\msvcr120.dll'
+# End of Stack Trace
+
+
+# Current time Sat Jun 14 22:54:04 2025
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "10.5b"
+# Version = "2016.10"
+# Date = "Oct  5 2016"
+# Platform = win32pe
+# Signature = a4da31216fa3031746f0a74423efc007
+# 0    0x0068386f: '<unknown (@0x68386f)>'
+# 1    0xfdea4462: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:98'
+# 2    0xfdea4462: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:98'
+# 3    0x0061a9de: '<unknown (@0x61a9de)>'
+# 4    0x0078056a: '<unknown (@0x78056a)>'
+# 5    0x67a67132: 'getenv + 0x67' in 'c:\windows\system32\msvcr120.dll'
+# End of Stack Trace
+
+
+# Current time Sat Jun 14 22:54:51 2025
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "10.5b"
+# Version = "2016.10"
+# Date = "Oct  5 2016"
+# Platform = win32pe
+# Signature = a4da31216fa3031746f0a74423efc007
+# 0    0x0068386f: '<unknown (@0x68386f)>'
+# 1    0xfdea4462: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:98'
+# 2    0xfdea4462: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:98'
+# 3    0x0061a9de: '<unknown (@0x61a9de)>'
+# 4    0x0078056a: '<unknown (@0x78056a)>'
+# 5    0x6d077132: 'getenv + 0x67' in 'c:\windows\system32\msvcr120.dll'
+# End of Stack Trace
+
+
+# Current time Sat Jun 14 22:56:19 2025
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "10.5b"
+# Version = "2016.10"
+# Date = "Oct  5 2016"
+# Platform = win32pe
+# Signature = a4da31216fa3031746f0a74423efc007
+# 0    0x0068386f: '<unknown (@0x68386f)>'
+# 1    0xfdea4462: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:98'
+# 2    0xfdea4462: 'C:/Users/emari/Desktop/ArregloSistolico_Proyecto2/SystolicArray_SV/systolic_array_tb.sv:98'
+# 3    0x0061a9de: '<unknown (@0x61a9de)>'
+# 4    0x0078056a: '<unknown (@0x78056a)>'
+# 5    0x6d077132: 'getenv + 0x67' in 'c:\windows\system32\msvcr120.dll'
+# End of Stack Trace
+
+

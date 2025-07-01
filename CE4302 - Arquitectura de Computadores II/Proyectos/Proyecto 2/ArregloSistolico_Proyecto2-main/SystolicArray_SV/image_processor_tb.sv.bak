@@ -1,0 +1,96 @@
+module image_processor_tb ();
+    logic clk, reset, start, done, error;
+    logic [31:0] mem_addr;
+    logic mem_read_en, mem_write_en;
+    logic [31:0] mem_read_data, mem_write_data;
+    logic mem_ready;
+    
+    logic [15:0] pixel_block [0:3][0:3];
+    logic block_valid;
+    logic [31:0] processed_block [0:3][0:3];
+    logic block_processed;
+    
+    // Instancia del módulo bajo prueba
+    image_processor dut (
+        .clk(clk),
+        .reset(reset),
+        .start(start),
+        .done(done),
+        .error(error),
+        .mem_addr(mem_addr),
+        .mem_read_en(mem_read_en),
+        .mem_write_en(mem_write_en),
+        .mem_read_data(mem_read_data),
+        .mem_write_data(mem_write_data),
+        .mem_ready(mem_ready),
+        .pixel_block(pixel_block),
+        .block_valid(block_valid),
+        .processed_block(processed_block),
+        .block_processed(block_processed)
+    );
+    
+    // Generación de reloj
+    always #5 clk = ~clk;
+    
+    // Simulación del arreglo sistólico (mock)
+    always @(posedge clk) begin
+        if (block_valid) begin
+            // Simular procesamiento (retardo de 1 ciclo)
+            for (int i = 0; i < 4; i++) begin
+                for (int j = 0; j < 4; j++) begin
+                    processed_block[i][j] <= pixel_block[i][j] * 2;  // Ejemplo simple
+                end
+            end
+            block_processed <= 1;
+        end else begin
+            block_processed <= 0;
+        end
+    end
+    
+    // Simulación de memoria
+    logic [31:0] memory [0:1023];  // Memoria de prueba (1KB)
+    always @(posedge clk) begin
+        mem_ready <= 0;
+        if (mem_read_en) begin
+            mem_read_data <= memory[mem_addr >> 2];  // Acceso alineado a palabras
+            mem_ready <= 1;
+        end
+        if (mem_write_en) begin
+            memory[mem_addr >> 2] <= mem_write_data;
+            mem_ready <= 1;
+        end
+    end
+    
+    // Inicialización y test
+    initial begin
+        clk = 0;
+        reset = 1;
+        start = 0;
+        mem_ready = 0;
+        
+        // Inicializar memoria con datos de prueba
+        // Header: width=8, height=8
+        memory[0] = 32'h00000008;  // width (addr 0x00000020)
+        memory[1] = 32'h00000008;  // height (addr 0x00000024)
+        
+        // Datos de imagen (8x8 píxeles, valores de ejemplo)
+        for (int i = 2; i < 18; i++) begin
+            memory[i] = {8'd10, 8'd20, 8'd30, 8'd40};  // Píxeles empaquetados
+        end
+        
+        #10 reset = 0;
+        start = 1;
+        #10 start = 0;
+        
+        // Esperar a que termine el procesamiento
+        wait (done);
+        
+        // Verificar resultados
+        $display("Procesamiento completado. Resultados en memoria:");
+        for (int i = (32'h00001000 >> 2); i < (32'h00001000 >> 2) + 16; i++) begin
+            $display("Addr %h: %h", i << 2, memory[i]);
+        end
+        
+        $finish;
+    end
+endmodule

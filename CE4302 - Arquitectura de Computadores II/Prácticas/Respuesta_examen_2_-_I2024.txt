@@ -1,0 +1,13 @@
+a) PE0 - PE1 - PE2 - PE5 / PE0 - PE3 - PE4 - PE5 / PE0 - PE1 - PE4 - PE5
+
+b) Si pasamos por un PE dentro del 10%: 1.74 ciclos/inst
+Ignorando PE1 y PE4: 1.8 ciclos/inst
+
+c) 5.5%
+
+d) 2%
+
+e) sin función penalización: 4.09 | con función penalización: 0.26
+Si se incrementa mesh 4x4: sin función penalización: 4.92 | con función penalización: 2.19 * 10^-3
+
+

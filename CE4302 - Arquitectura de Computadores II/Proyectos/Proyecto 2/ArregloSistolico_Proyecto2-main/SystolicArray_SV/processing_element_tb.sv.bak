@@ -1,0 +1,77 @@
+//`timescale 1ns / 1ps
+
+module ProcessingElement_tb;
+
+    // Parámetros
+    localparam CLK_PERIOD = 10;  // Periodo de reloj en ns
+
+    // Señales de entrada/salida
+    logic        clk;
+    logic        reset;
+    logic        enable;
+    logic [15:0] input_data;
+    logic [31:0] partial_in;
+    logic [31:0] partial_out;
+
+    // Instancia del módulo bajo prueba (DUT)
+    ProcessingElement dut (
+        .clk(clk),
+        .reset(reset),
+        .enable(enable),
+        .input_data(input_data),
+        .partial_in(partial_in),
+        .partial_out(partial_out)
+    );
+
+    // Generación de reloj
+    initial begin
+        clk = 0;
+        forever #(CLK_PERIOD/2) clk = ~clk;
+    end
+
+    // Secuencia de pruebas
+    initial begin
+        // Inicialización
+        reset = 1;
+        enable = 0;
+        input_data = 0;
+        partial_in = 0;
+        #20;
+
+        // Reset y configuración inicial
+        reset = 0;
+        enable = 1;
+        input_data = 16'h0002;  // +2
+        partial_in = 32'h0000;  // 0
+        #20;
+
+        // Prueba 1: MAC básica (2 * 3 + 0 = 6)
+        input_data = 16'h0003;  // +3 (peso simulado en weight_reg)
+        partial_in = 32'h0000;  // 0
+        #20;
+        if (partial_out !== 32'h0006) $error("Prueba 1 falló: Esperado 6, Obtenido %d", partial_out);
+
+        // Prueba 2: Clamping superior (100 * 2 + 0 = 200 → clamp a 127)
+        input_data = 16'h0064;  // +100
+        partial_in = 32'h0000;  // 0
+        #20;
+        if (partial_out !== 32'h007F) $error("Prueba 2 falló: Esperado 127, Obtenido %d", partial_out);
+
+        // Prueba 3: Clamping inferior (-50 * 3 + 0 = -150 → clamp a -128)
+        input_data = 16'hFFCE;  // -50
+        partial_in = 32'h0000;  // 0
+        #20;
+        if (partial_out !== 32'hFF80) $error("Prueba 3 falló: Esperado -128, Obtenido %d", partial_out);
+
+        // Prueba 4: Acumulación (5 * 1 + 10 = 15)
+        input_data = 16'h0005;  // +5
+        partial_in = 32'h000A;  // +10
+        #20;
+        if (partial_out !== 32'h000F) $error("Prueba 4 falló: Esperado 15, Obtenido %d", partial_out);
+
+        // Finalización
+        $display("Testbench completado sin errores.");
+        $finish;
+    end
+
+endmodule

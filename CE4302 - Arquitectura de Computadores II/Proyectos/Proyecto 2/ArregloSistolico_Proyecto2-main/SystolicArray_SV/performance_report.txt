@@ -1,0 +1,9 @@
+=== PERFORMANCE REPORT (with RAM IP Latency) ===
+Total MAC operations: 25216
+Total processing cycles: 1576
+Total memory accesses: 4749
+Total bytes transferred: 18996
+Arithmetic intensity (Ai): 1.3274
+Memory efficiency: 57.97%
+Memory read latency: 2 cycles
+==========================

@@ -1,0 +1,19 @@
+
+[2025-04-30 12:20:10] 
+======== Interconnect Stats ========
+Arbitration:         FIFO
+
+Total Messages:      78
+  READ_MEM:          32
+  WRITE_MEM:         26
+  INVALIDATIONS:     20
+
+Processing Times (μs):
+  Average:           10236.71
+  Total:             798463
+
+Queue Statistics:
+  Max Size:          7
+  Average Size:      5.96
+====================================
+

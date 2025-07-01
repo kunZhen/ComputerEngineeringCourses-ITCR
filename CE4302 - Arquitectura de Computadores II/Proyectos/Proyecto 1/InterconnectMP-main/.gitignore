@@ -1,0 +1,10 @@
+src/main
+src/main.o
+src/simulator
+src/shared_memory.o
+src/cache_memory.o
+src/instruction_memory.o
+src/processing_element.o
+src/interconnect.o
+src/utils.o
+src/logger.o
