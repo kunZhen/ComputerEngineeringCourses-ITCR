@@ -1,0 +1,58 @@
+@startuml
+skinparam style strictuml
+skinparam component {
+  BackgroundColor White
+  BorderColor     Black
+  ArrowColor      DarkSlateGray
+}
+
+'──────────── 1. Ejecutable en C ────────────
+package "scheduling_cars (binario C)" as CORE {
+  [Main.c]                                   as MAIN
+  component "Street Manager"                  as C_CANAL
+  component "Calendar Scheduler"             as C_CAL
+  component "TCP Server\n(send_data / accept)" as C_TCP
+  component "Config Loader\n(Street_init)"    as C_CFG
+}
+
+'──────────── 2. Bibliotecas C ──────────────
+component "libCEthreads.so\n(hilos + mutex)" as LIB_THREADS
+component "libSocket (libc)"                 as LIB_SOCKET
+component "libStdC"                          as LIB_STDC
+
+'──────────── 3. Artefactos externos ────────
+artifact  "street.config"  as CFG
+folder    "images/"       as IMGDIR
+
+'──────────── 4. GUI Python ─────────────────
+node "GUI Host" as PY_HOST {
+  component "gui.py\n(Tkinter)"      as GUI
+  component "Socket Client"          as PY_SOCK
+  component "Tk Renderer"            as PY_TK
+  component "Pillow Assets"          as PY_PIL
+}
+database "Tkinter EventLoop"         as TK_LOOP
+
+'──────────── 5. Relaciones ────────────────
+'  Enlaces internos del ejecutable
+MAIN  --> C_CFG
+MAIN  --> C_CANAL
+C_CANAL --> C_CAL
+C_CANAL --> C_TCP
+
+'  Vínculos con libs de sistema / usuario
+CORE ..> LIB_THREADS
+CORE ..> LIB_SOCKET
+CORE ..> LIB_STDC
+
+'  Acceso a archivos
+C_CFG  ..> CFG     : «read»
+
+'  Comunicación tiempo real
+C_TCP  --> PY_SOCK : TCP :5000
+
+'  GUI y recursos
+PY_PIL ..> IMGDIR : «load»
+PY_TK   ..> TK_LOOP
+
+@enduml

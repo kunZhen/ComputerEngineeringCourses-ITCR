@@ -1,0 +1,68 @@
+@startuml
+'──────────────────────────────────────────────
+'  Scheduling Cars – Deployment / Architecture
+'──────────────────────────────────────────────
+skinparam style strictuml
+skinparam node {
+  BackgroundColor White
+  BorderColor     Black
+  ArrowColor      DarkSlateGray
+}
+
+'======== 1. Host que ejecuta el backend (C) ========
+node "Host A\n(Linux x86-64)" as HOST_A {
+
+  node "scheduling_cars\n(processo C)" as PROC {
+    [Main.c] as MAIN
+    component "Street Manager\n+ Street_Schedule()\n+ carmover()" as CANAL
+    component "Calendar Scheduler\n(calendar())"  as CAL
+    component "TCP Server\n(send_data / accept)" as TCP_S
+    component "Config Loader"                    as CFG_L
+
+    ' Relación interna de módulos
+    MAIN --> CANAL
+    CANAL --> CAL
+    CANAL --> TCP_S
+    CFG_L --> CANAL
+  }
+
+  component "libCEthreads.so"   as LIB_THREADS
+  component "libc / sockets"    as LIBC
+  database  "Kernel\nclone / futex / epoll" as KERNEL
+
+  ' Dependencias del proceso
+  PROC ..> LIB_THREADS
+  PROC ..> LIBC
+  PROC ..> KERNEL
+}
+
+'======== 2. Host que ejecuta la GUI (Python) ========
+node "Host B\n(Win / Linux / macOS)" as HOST_B {
+
+  node "Python GUI process" as PY_PROC {
+    component "gui.py (Tkinter loop)" as GUI
+    component "Socket Client"         as PY_SOCK
+    component "Tk Renderer"           as PY_REN
+    component "Pillow Assets"         as PY_PIL
+
+    GUI --> PY_SOCK
+    GUI --> PY_REN
+    PY_REN --> PY_PIL
+  }
+
+  database "Tkinter EventLoop" as TK_LOOP
+  PY_REN ..> TK_LOOP
+}
+
+'======== 3. Artefactos compartidos (filesystem) =====
+artifact "street.config"  as CFG_FILE
+folder  "images/"        as IMG_DIR
+
+'======== 4. Conexiones de red / archivos ===========
+PROC  --> CFG_FILE : «read at startup»
+
+PY_PROC --> IMG_DIR : «load PNGs»
+
+PROC  -[#blue,bold]>  PY_SOCK : TCP :5000
+
+@enduml

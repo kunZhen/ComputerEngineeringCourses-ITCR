@@ -1,0 +1,50 @@
+@startuml
+skinparam style strictuml
+hide footbox
+
+actor Usuario
+participant "CarCLI" as CLI #LightBlue
+participant "StreetMgr\n(lógica C)" as SM
+participant "Cola derecha\n(WaitLine)" as Qr
+participant "Calendar" as CAL
+participant "Street[]" as ST
+participant "CarThread" as TH
+participant "TCP Server" as TCP
+participant "GUI Python" as GUI #LightGreen
+
+== 1. Petición ==
+Usuario -> CLI : tecla «r»
+CLI    -> SM  : addCar(derecha, tipo)
+
+== 2. Encolar y replanificar ==
+SM  -> Qr  : push(car)
+SM  -> CAL : calendar()
+CAL --> SM : ✔︎ TiempoReal?
+SM  -> ST  : streetcontent()
+SM  -> TCP : send_data()
+TCP -> GUI : estado vía TCP :5000
+GUI -> GUI : update_canvas()
+
+== 3. Bucle de planificación (cada 1 ms) ==
+loop Street_Schedule
+  SM -> ST : EnterStreet()
+  alt hueco libre
+       SM -> Qr : pop()
+       SM -> ST : insert(car)\ncars_in++
+       SM -> TH : launch carmover()
+       activate TH
+  else calle llena
+       note right SM : espera hueco
+  end
+end
+
+== 4. Movimiento del vehículo ==
+loop hasta salir
+  TH -> ST  : avanzar()
+  TH -> SM  : streetcontent()
+  SM -> TCP : send_data()
+  TCP -> GUI : update
+end
+TH -> ST : cars_in-- (libera)
+deactivate TH
+@enduml

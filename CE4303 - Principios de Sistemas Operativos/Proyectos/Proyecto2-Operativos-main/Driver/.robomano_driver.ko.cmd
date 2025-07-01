@@ -1,0 +1,1 @@
+savedcmd_/home/emilio/Documents/Proyecto2-Operativos/Driver/robomano_driver.ko := ld -r -m elf_x86_64 -z noexecstack --build-id=sha1  -T scripts/module.lds -o /home/emilio/Documents/Proyecto2-Operativos/Driver/robomano_driver.ko /home/emilio/Documents/Proyecto2-Operativos/Driver/robomano_driver.o /home/emilio/Documents/Proyecto2-Operativos/Driver/robomano_driver.mod.o

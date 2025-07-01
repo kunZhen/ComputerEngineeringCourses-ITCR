@@ -1,0 +1,1 @@
+savedcmd_/home/emilio/Documents/Proyecto2-Operativos/Driver/Module.symvers :=  scripts/mod/modpost -M -m -a      -o /home/emilio/Documents/Proyecto2-Operativos/Driver/Module.symvers -T /home/emilio/Documents/Proyecto2-Operativos/Driver/modules.order -i Module.symvers -e 

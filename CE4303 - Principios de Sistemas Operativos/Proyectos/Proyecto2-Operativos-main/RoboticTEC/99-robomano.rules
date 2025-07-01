@@ -1,0 +1,6 @@
+# Regla udev para dispositivo RoboMano
+# Permite acceso a usuarios en el grupo 'users' o 'dialout'
+
+SUBSYSTEM=="usb", ATTR{idVendor}=="*", ATTR{idProduct}=="*", MODE="0666", GROUP="users"
+KERNEL=="robomano", MODE="0666", GROUP="users"
+ATTRS{name}=="robomano*", MODE="0666", GROUP="users"

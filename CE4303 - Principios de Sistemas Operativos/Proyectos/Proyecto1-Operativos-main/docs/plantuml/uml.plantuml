@@ -1,0 +1,118 @@
+@startuml
+'──────────────────────────────
+'Scheduling Cars – Class Diagram
+'──────────────────────────────
+skinparam style strictuml
+'Elimina los círculos de interfaz
+hide circle
+skinparam class {
+  BackgroundColor White
+  ArrowColor      DarkSlateGray
+  BorderColor     Black
+}
+
+'==== 1. Biblioteca de hilos =========
+package "lib (CEthreads)" {
+  class CEthread_t <<struct>> {
+    +pid_t tid
+  }
+
+  class CEmutex_t <<struct>> {
+    +_Atomic int value
+  }
+}
+
+'==== 2. Calendar (alg. de planificación de hilos) ====
+package "calendar" {
+  class Car <<struct>> {
+    +CEthread_t thread
+    +int   ID
+    +int   position
+    +int   speed
+    +float tiempo_total
+    +float tiempo_restante
+    +int   typecar
+    +bool  Permission
+  }
+
+  class Calendar <<module>> {
+    +calendar(option,int,Car[],int,Car):bool
+    +round_robin(...)
+    +adjustPatrol(...)
+    +RealTime(...)
+  }
+}
+
+'==== 3. Street y gestor de flujo =======================
+package "street" {
+  class WaitLine <<struct>> {
+    +Car* waiting
+    +int   maxcapacity
+    +int   capacity
+  }
+
+  class Street <<struct>> {
+    +int  managed_cars
+    +int  cars_in
+    +int  size
+    +Car* street
+    --
+    +int W
+    +int time
+    +int carspeeds[3]
+    --
+    +int street_scheduling
+    +int thread_scheduling
+    --
+    +bool direction
+    +bool running
+    +bool Yellowlight
+    +bool TiempoReal
+    +int  RRiter
+    +int  RRID
+  }
+
+  class StreetManager <<module>> {
+    +street_tryout()
+    +Street_init(configPath)
+    +start_server()
+    +CarGUI()
+    +Street_Schedule()
+    +EnterStreet(...)
+    +carmover(...)
+    +YellowStreet()
+    +Street_RR()
+    +CheckRealTime()
+    +send_data()
+  }
+}
+
+'==== 4. GUI (Tkinter + sockets) =======================
+package "gui (Python)" {
+  class GUI <<script>> {
+    +connect_to_server()
+    +receive_data()
+    +update_canvas()
+    +on_closing()
+  }
+}
+
+'==== 5. Punto de entrada ==============================
+package "app" {
+  class Main <<script>> {
+    +main()
+  }
+}
+
+'───────────────── Relaciones ─────────────────
+Main       --> StreetManager  : street_tryout()
+StreetManager *-- Street        : crea y administra
+Street      *-- Car           : contiene
+Street      o-- WaitLine       : left_street/right_street
+StreetManager ..> Calendar     : utiliza
+Car       --> CEthread_t     : hilo que lo mueve
+StreetManager ..> CEthread_t   : crea/junta hilos
+StreetManager ..> CEmutex_t    : sincronización
+GUI        --> StreetManager   : comunicación vía socket
+
+@enduml

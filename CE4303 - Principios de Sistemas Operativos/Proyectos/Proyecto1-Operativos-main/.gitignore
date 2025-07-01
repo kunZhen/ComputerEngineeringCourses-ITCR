@@ -1,0 +1,21 @@
+# Ignorar carpeta build y cmake-build-debug
+build/
+cmake-build-debug/
+
+# Ignorar archivos generados por CMake
+CMakeCache.txt
+CMakeFiles/
+*.cmake
+Makefile
+
+# Ignorar archivos compilados
+*.o
+*.obj
+*.exe
+*.out
+*.app
+
+# Ignorar archivos específicos de IDE
+.vscode/
+.idea/
+*.user

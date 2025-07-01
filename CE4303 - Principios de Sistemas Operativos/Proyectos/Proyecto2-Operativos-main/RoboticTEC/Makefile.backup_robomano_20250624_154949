@@ -1,0 +1,186 @@
+# Makefile para el proyecto RoboticTEC - VERSION INTEGRADA
+CC = gcc
+MPICC = mpicc
+AR = ar
+CFLAGS = -Wall -Wextra -g -O2
+LDFLAGS =
+
+# Directorios
+SRCDIR = .
+OBJDIR = obj
+BINDIR = bin
+LIBDIR = lib
+
+# Archivos fuente - ACTUALIZADOS para usar robomano
+ROBOMANO_SRC = robomano.c
+SERVIDOR_SRC = server.c
+CLIENTE_SRC = client.c
+NODO_SRC = nodo.c
+DEMO_SRC = demo.c
+
+# Archivos objeto
+ROBOMANO_OBJ = $(OBJDIR)/robomano.o
+SERVIDOR_OBJ = $(OBJDIR)/server.o
+CLIENTE_OBJ = $(OBJDIR)/client.o
+NODO_OBJ = $(OBJDIR)/nodo.o
+DEMO_OBJ = $(OBJDIR)/demo.o
+
+# Ejecutables y bibliotecas
+SERVIDOR_BIN = $(BINDIR)/server
+CLIENTE_BIN = $(BINDIR)/client
+NODO_BIN = $(BINDIR)/nodo
+DEMO_BIN = $(BINDIR)/demo
+ROBOMANO_LIB = $(LIBDIR)/librobomano.a
+
+# Regla por defecto
+all: directories $(ROBOMANO_LIB) $(SERVIDOR_BIN) $(CLIENTE_BIN) $(NODO_BIN) $(DEMO_BIN)
+	@echo "Compilación completada exitosamente!"
+	@echo "Ejecutables disponibles:"
+	@echo "  - Servidor: $(SERVIDOR_BIN)"
+	@echo "  - Cliente:  $(CLIENTE_BIN)"
+	@echo "  - Nodo MPI: $(NODO_BIN)"
+	@echo "  - Demo:     $(DEMO_BIN)"
+	@echo "  - Biblioteca: $(ROBOMANO_LIB)"
+
+# Crear directorios necesarios
+directories:
+	@mkdir -p $(OBJDIR) $(BINDIR) $(LIBDIR) archivos
+
+# Compilar biblioteca estática - ACTUALIZADA
+$(ROBOMANO_LIB): $(ROBOMANO_OBJ)
+	@echo "Creando biblioteca estática librobomano.a..."
+	$(AR) rcs $@ $^
+	@echo "Biblioteca creada: $@"
+
+# Compilar servidor - ACTUALIZADO para usar librobomano
+$(SERVIDOR_BIN): $(SERVIDOR_OBJ) $(ROBOMANO_LIB)
+	@echo "Compilando servidor..."
+	$(CC) $(CFLAGS) -o $@ $< -L$(LIBDIR) -lrobomano $(LDFLAGS)
+
+# Compilar cliente
+$(CLIENTE_BIN): $(CLIENTE_OBJ)
+	@echo "Compilando cliente..."
+	$(CC) $(CFLAGS) -o $@ $< $(LDFLAGS)
+
+# Compilar nodo MPI
+$(NODO_BIN): $(NODO_OBJ)
+	@echo "Compilando nodo MPI..."
+	$(MPICC) $(CFLAGS) -o $@ $< $(LDFLAGS)
+
+# Compilar demo - NUEVO
+$(DEMO_BIN): $(DEMO_OBJ) $(ROBOMANO_LIB)
+	@echo "Compilando demo..."
+	$(CC) $(CFLAGS) -o $@ $< -L$(LIBDIR) -lrobomano $(LDFLAGS)
+
+# Reglas para objetos individuales - ACTUALIZADAS
+$(OBJDIR)/robomano.o: $(ROBOMANO_SRC) robomano.h
+	@echo "Compilando robomano.c..."
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJDIR)/server.o: $(SERVIDOR_SRC) robomano.h
+	@echo "Compilando server.c..."
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJDIR)/client.o: $(CLIENTE_SRC)
+	@echo "Compilando client.c..."
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJDIR)/nodo.o: $(NODO_SRC)
+	@echo "Compilando nodo.c..."
+	$(MPICC) $(CFLAGS) -c $< -o $@
+
+$(OBJDIR)/demo.o: $(DEMO_SRC) robomano.h
+	@echo "Compilando demo.c..."
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# COMPATIBILIDAD: Alias para la biblioteca con nombre anterior
+librobomano.a: $(ROBOMANO_LIB)
+	@cp $(ROBOMANO_LIB) ./librobomano.a
+	@echo "Biblioteca copiada al directorio actual para compatibilidad."
+
+# COMPATIBILIDAD: Compilar demo en el directorio actual (como en el Makefile original)
+demo: $(DEMO_SRC) librobomano.a robomano.h
+	@echo "Compilando demo en directorio actual..."
+	$(CC) $(DEMO_SRC) -L. -lrobomano -o demo
+
+# Instalar (copiar ejecutables al directorio actual para facilitar uso)
+install: all librobomano.a
+	@echo "Instalando ejecutables..."
+	@cp $(SERVIDOR_BIN) ./server
+	@cp $(CLIENTE_BIN) ./client
+	@cp $(NODO_BIN) ./nodo
+	@cp $(DEMO_BIN) ./demo
+	@echo "Ejecutables instalados en el directorio actual."
+
+# Limpiar archivos generados - ACTUALIZADO
+clean:
+	@echo "Limpiando archivos generados..."
+	@rm -rf $(OBJDIR) $(BINDIR) $(LIBDIR)
+	@rm -f server client nodo demo
+	@rm -f librobomano.a *.o
+	@rm -f archivos/archivo_cifrado.txt archivos/archivo_descifrado.txt
+	@echo "Limpieza completada."
+
+# Limpiar todo incluyendo directorios
+distclean: clean
+	@rm -rf archivos
+	@echo "Limpieza completa realizada."
+
+# Verificar dependencias
+test-deps:
+	@echo "Verificando dependencias..."
+	@which gcc > /dev/null || (echo "ERROR: gcc no encontrado" && exit 1)
+	@which mpicc > /dev/null || (echo "ERROR: mpicc no encontrado. Instalar OpenMPI" && exit 1)
+	@which mpirun > /dev/null || (echo "ERROR: mpirun no encontrado. Instalar OpenMPI" && exit 1)
+	@which ar > /dev/null || (echo "ERROR: ar no encontrado" && exit 1)
+	@echo "Todas las dependencias están disponibles."
+
+# Prueba de la biblioteca con demo
+test-demo: demo
+	@echo "=== PRUEBA DE LA BIBLIOTECA ROBOMANO ==="
+	@echo "Ejecutando demo..."
+	@./demo || echo "Demo ejecutado (verificar salida)"
+
+# Prueba rápida del sistema completo
+test-quick: install
+	@echo "=== PRUEBA RÁPIDA DEL SISTEMA COMPLETO ==="
+	@echo "Creando archivo de prueba..."
+	@echo "esta es una prueba prueba del sistema sistema sistema" > test.txt
+	@echo "Iniciando servidor en background..."
+	@timeout 10 ./server &
+	@sleep 1
+	@echo "Enviando archivo..."
+	@timeout 5 ./client test.txt 127.0.0.1 || true
+	@sleep 1
+	@killall server 2>/dev/null || true
+	@rm -f test.txt archivo_cifrado.txt
+	@echo "Prueba rápida completada."
+
+# Ejecutar todas las pruebas
+test-all: test-deps test-demo test-quick
+	@echo "=== TODAS LAS PRUEBAS COMPLETADAS ==="
+
+# Mostrar ayuda - ACTUALIZADA
+help:
+	@echo "Makefile para el proyecto RoboticTEC (Integrado)"
+	@echo ""
+	@echo "Objetivos principales:"
+	@echo "  all          - Compilar todo el proyecto"
+	@echo "  install      - Compilar e instalar ejecutables"
+	@echo "  demo         - Compilar solo el demo en directorio actual"
+	@echo "  librobomano.a- Crear biblioteca en directorio actual"
+	@echo ""
+	@echo "Limpieza:"
+	@echo "  clean        - Limpiar archivos generados"
+	@echo "  distclean    - Limpieza completa"
+	@echo ""
+	@echo "Pruebas:"
+	@echo "  test-deps    - Verificar dependencias"
+	@echo "  test-demo    - Probar biblioteca con demo"
+	@echo "  test-quick   - Prueba rápida del sistema"
+	@echo "  test-all     - Ejecutar todas las pruebas"
+	@echo ""
+	@echo "  help         - Mostrar esta ayuda"
+
+# Declarar objetivos que no son archivos
+.PHONY: all directories install clean distclean test-deps test-demo test-quick test-all help demo librobomano.a
